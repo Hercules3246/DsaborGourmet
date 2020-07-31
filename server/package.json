@@ -1,0 +1,24 @@
+{
+  "name": "miguel_angel_quintero_giraldo",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Miguel Angel Quintero Giraldo",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt-node": "^0.1.0",
+    "bcrypt-nodejs": "^0.0.3",
+    "body-parser": "^1.19.0",
+    "connect-multiparty": "^2.2.0",
+    "express": "^4.17.1",
+    "global": "^4.4.0",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.24.0",
+    "mongoose": "^5.9.2",
+    "mongoose-paginate": "^5.0.3",
+    "nodemon": "^2.0.2",
+    "react-router-dom": "^5.1.2"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  }
+}
