@@ -6,16 +6,14 @@ import "./Pagination.scss";
 export default function Pagination(props) {
   const {
     productLocation,
-    location,
+    setProductLocation,
     history,
-    ProductLocationTotal,
     ProductLocationLimit,
+    ProductLocationTotal,
+    location,
   } = props;
 
   const currentPage = parseInt(productLocation);
-  //   console.log(productLocation);
-  //   console.log(location);
-  //   console.log(history);
   const onChangePage = (newPage) => {
     history.push(`${location.pathname}?page=${newPage}`);
   };

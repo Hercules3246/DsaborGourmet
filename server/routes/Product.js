@@ -5,17 +5,21 @@ const md_auth = require("../middlewares/authenticated");
 
 const api = express.Router();
 
-api.get("/get-products", ProductController.getProduct);
-api.get(
-  "/product-active",
+api.get("/product-active", ProductController.getProductActive);
+api.post(
+  "/add-product-admin",
   [md_auth.ensureAuth],
-  ProductController.getProductActive
+  ProductController.addProductAdmin
 );
-api.post("/add-product", [md_auth.ensureAuth], ProductController.addProduct);
 api.put(
   "/update-product/:id",
   [md_auth.ensureAuth],
   ProductController.updateProduct
+);
+api.put(
+  "/activate-prod/:id",
+  [md_auth.ensureAuth],
+  ProductController.activateProd
 );
 api.delete(
   "/delete-product/:id",

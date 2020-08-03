@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Icon, Input, Button, Select, notification } from "antd";
 import { BookOutlined } from "@ant-design/icons";
-import { addProductApi } from "../../../../api/product";
+import { addProductAdminApi } from "../../../../api/product";
 import { getAccesTokenApi } from "../../../../api/auth";
 
 import "./AddProductForm.scss";
@@ -27,13 +27,13 @@ export default function AddProductForm(props) {
       });
     } else {
       const accessToken = getAccesTokenApi();
-      addProductApi(accessToken, prodData)
+      addProductAdminApi(accessToken, prodData)
         .then((res) => {
           notification["success"]({
             message: res,
           });
-          setIsVisibleModal(false);
           setReloadProduct(true);
+          setIsVisibleModal(false);
           setprodData({});
         })
         .catch(() => {
@@ -43,6 +43,7 @@ export default function AddProductForm(props) {
         });
     }
   };
+
   return (
     <div className="add-product-form">
       <AddForm
@@ -61,7 +62,6 @@ function AddForm(props) {
     <Form className="form-add" onSubmit={addProduct}>
       <Form.Item>
         <Input
-          prefix={<BookOutlined />}
           placeholder="Nombre del producto"
           value={prodData.name}
           onChange={(e) => setprodData({ ...prodData, name: e.target.value })}

@@ -1,7 +1,8 @@
 import { basePath, apiVersion } from "./config";
 
-export function getProductApi(page, limit) {
-  const url = `${basePath}/${apiVersion}/get-products?page=${page}&limit=${limit}`;
+export function getProductActiveApi(page, limit, status) {
+  const url = `${basePath}/${apiVersion}/product-active?page=${page}&limit=${limit}&active=${status}`;
+
   return fetch(url)
     .then((response) => {
       return response.json();
@@ -81,6 +82,54 @@ export function deleteProductApi(token, prodId) {
       return result.message;
     })
     .catch((err) => {
+      return err.message;
+    });
+}
+
+export function addProductAdminApi(token, data) {
+  const url = `${basePath}/${apiVersion}/add-product-admin/`;
+  const params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    body: JSON.stringify(data),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result.message;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
+
+export function activateProdApi(token, userdId, status) {
+  const url = `${basePath}/${apiVersion}/activate-prod/${userdId}`;
+  const params = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    body: JSON.stringify({
+      active: status,
+    }),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .then((err) => {
       return err.message;
     });
 }

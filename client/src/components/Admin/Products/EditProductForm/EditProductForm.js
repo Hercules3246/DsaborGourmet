@@ -8,12 +8,11 @@ import { BookOutlined } from "@ant-design/icons";
 import "./EditProductForm.scss";
 
 export default function EditProductForm(props) {
-  const { setReloadProduct, setIsVisibleModal, product } = props;
+  const { setReloadProduct, setIsVisibleModal, prod } = props;
   const [prodData, setProdData] = useState({});
-
   useEffect(() => {
-    setProdData(product);
-  }, [product]);
+    setProdData(prod);
+  }, [prod]);
 
   const editProd = (event) => {
     event.preventDefault();
@@ -66,7 +65,6 @@ function EditForm(props) {
     <Form className="form-edit" onSubmit={editProd}>
       <Form.Item>
         <Input
-          prefix={<BookOutlined />}
           placeholder="Nombre del producto"
           value={prodData.name}
           onChange={(e) => {

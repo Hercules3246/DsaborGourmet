@@ -1,3 +1,4 @@
+@import "../../../../scss/index.scss";
 .product-list {
   &__header {
     clear: both;
@@ -7,36 +8,37 @@
     margin-bottom: 20px;
 
     &-switch {
-      display: flex;
-      align-items: center;
+      display: block;
+      &__search-content {
+        margin-left: 50px !important;
+      }
+    }
 
+    &___button_content {
+      background-color: red;
+      width: 50%;
       > button {
         margin-right: 20px;
       }
     }
   }
 
-  &__items {
+  .ant-input-search {
+    margin-left: 10%;
+    width: 90%;
+  }
+
+  .ant-input-search:hover {
+    color: $primary-color !important;
+  }
+
+  .nt-input-search:active {
+    color: $primary-color !important;
+  }
+
+  .products-active {
     background-color: #fff;
     padding: 10px 20px;
-
-    .List {
-      position: relative;
-
-      .draggable {
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.5);
-
-        &:hover {
-          cursor: pointer;
-        }
-
-        &.dragged {
-          border: 1px solid #e2e2e2;
-          padding: 0 10px;
-        }
-      }
-    }
 
     .ant-list-item-meta {
       display: flex;
