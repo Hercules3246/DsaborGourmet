@@ -15,6 +15,21 @@ export function getProductActiveApi(page, limit, status) {
     });
 }
 
+export function getProductSearch(page, limit, name, status) {
+  const url = `${basePath}/${apiVersion}/product-search?page=${page}&limit=${limit}&name=${name}&active=${status}`;
+
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
+
 export function updateProductApi(token, prodId, data) {
   const url = `${basePath}/${apiVersion}/update-product/${prodId}`;
 

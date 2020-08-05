@@ -113,7 +113,35 @@ function activateProd(req, res) {
 }
 
 function searchProd(req, res) {
-  const { name } = req.body;
+  const { page = 1, limit = 10 } = req.query;
+  const query = req.query;
+  const options = {
+    page,
+    limit: parseInt(limit),
+    sort: { date: "asc" },
+  };
+
+  Prod.paginate(
+    {
+      name: { $regex: query.name.toLowerCase() },
+      active: query.active,
+    },
+    options,
+    (err, postsStored) => {
+      if (err) {
+        res.status(500).send({ code: 500, message: "Error del servidor." });
+      } else {
+        if (!postsStored) {
+          res.status(404).send({
+            code: 404,
+            message: "No se ha encontrado ningun Producto con ese nombre.",
+          });
+        } else {
+          res.status(200).send({ code: 200, posts: postsStored });
+        }
+      }
+    }
+  );
 }
 
 module.exports = {
@@ -122,4 +150,5 @@ module.exports = {
   getProductActive,
   addProductAdmin,
   activateProd,
+  searchProd,
 };

@@ -26,5 +26,6 @@ api.delete(
   [md_auth.ensureAuth],
   ProductController.deleteProd
 );
+api.get("/product-search", ProductController.searchProd);
 
 module.exports = api;

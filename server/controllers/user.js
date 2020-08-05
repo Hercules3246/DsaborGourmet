@@ -7,6 +7,7 @@ const User = require("../models/user");
 function signUp(req, res) {
   const user = new User();
   const { name, lastname, email, password, repeatPassword } = req.body;
+  
   user.name = name;
   user.lastname = lastname;
   user.email = email.toLowerCase();

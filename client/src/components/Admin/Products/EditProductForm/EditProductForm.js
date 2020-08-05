@@ -36,8 +36,8 @@ export default function EditProductForm(props) {
           notification["success"]({
             message: res,
           });
-          setIsVisibleModal(false);
           setReloadProduct(true);
+          setIsVisibleModal(false);
           setProdData({});
         })
         .catch(() => {

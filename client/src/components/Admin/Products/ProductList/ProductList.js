@@ -22,6 +22,7 @@ import {
   activateProdApi,
   deleteProductApi,
   getProductActiveApi,
+  getProductSearch,
 } from "../../../../api/product";
 
 import "./ProductList.scss";
@@ -29,20 +30,19 @@ const { confirm } = ModalAntd;
 const { Search } = Input;
 
 function ProductList(props) {
-  const {
-    setReloadProduct,
-    productActive,
-    productInactive,
-    location,
-    history,
-  } = props;
-  const [viewProductActives, setViewProductActives] = useState(true);
+  const { location, history } = props;
+  const [viewProductActives, setViewProductActives] = useState(true); //Switcher
+  const [productActiveSearch, setProductActiveSearch] = useState(""); //search
+  const [productActive, setProductActive] = useState([]); //productos activos
+  const [productInactive, setProductInactive] = useState([]); //productos inactivos
+  const [reloadProduct, setReloadProduct] = useState(false);
+
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState(null);
 
+  //Pagination
   const { page = 1 } = queryString.parse(location.search);
-
   const [productLocation, setProductLocation] = useState(null);
   const [ProductLocationTotal, setProductLocationTotal] = useState(null);
   const [ProductLocationLimit, setProductLocationLimit] = useState(null);
@@ -60,7 +60,7 @@ function ProductList(props) {
 
   const ActivePagination = () => {
     useEffect(() => {
-      getProductActiveApi(page, 6, true)
+      getProductSearch(page, 6, productActiveSearch, true)
         .then((response) => {
           if (response?.code !== 200) {
             notification["warning"]({
@@ -92,9 +92,43 @@ function ProductList(props) {
     );
   };
 
+  // const ActivePaginationSearch = (param) => {
+  //   useEffect(() => {
+  //     getProductSearch(page, 6, param)
+  //       .then((response) => {
+  //         if (response?.code !== 200) {
+  //           notification["warning"]({
+  //             message: response.message,
+  //           });
+  //         } else {
+  //           setProductLocation(response.posts.page);
+  //           setProductLocationTotal(response.posts.total);
+  //           setProductLocationLimit(response.posts.limit);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         notification["error"]({
+  //           message: "Error del servidor",
+  //         });
+  //       });
+  //     setReloadProduct(false);
+  //   }, [page]);
+
+  //   return (
+  //     <Pagination
+  //       productLocation={productLocation}
+  //       ProductLocationLimit={ProductLocationLimit}
+  //       ProductLocationTotal={ProductLocationTotal}
+  //       location={location}
+  //       history={history}
+  //       setProductLocation={setProductLocation}
+  //     />
+  //   );
+  // };
+
   const InactivePagination = () => {
     useEffect(() => {
-      getProductActiveApi(page, 6, false)
+      getProductSearch(page, 6, productActiveSearch, false)
         .then((response) => {
           if (response?.code !== 200) {
             notification["warning"]({
@@ -128,7 +162,81 @@ function ProductList(props) {
 
   useEffect(() => {
     history.push(`${location.pathname}`);
-  }, [viewProductActives]);
+  }, [viewProductActives, productActiveSearch]);
+
+  useEffect(() => {
+    //este metodo se ejecuta, justo despues de que el componente ah sido montado
+    getProductSearch(page, 6, productActiveSearch, true).then((response) => {
+      setProductActive(response.posts.docs); //lo que viene de la base de datos, se lo pasamos a nuestro estado
+    });
+    getProductSearch(page, 6, productActiveSearch, false).then((response) => {
+      setProductInactive(response.posts.docs); //lo que viene de la base de datos, se lo pasamos a nuestro estado
+    });
+    setReloadProduct(false);
+    console.log(reloadProduct);
+  }, [reloadProduct, page]);
+
+  console.log(reloadProduct);
+
+  const ProductSearchActives = () => {
+    getProductSearch(page, 6, productActiveSearch, true)
+      .then((response) => {
+        if (response?.code !== 200) {
+          notification["warning"]({
+            message: response.message,
+          });
+        } else {
+          setProductActive(response.posts.docs);
+        }
+      })
+      .catch((err) => {
+        notification["error"]({
+          message: "Error del servidor",
+        });
+      });
+    setReloadProduct(true);
+  };
+
+  const ProductSearchInactives = () => {
+    getProductSearch(page, 6, productActiveSearch, false)
+      .then((response) => {
+        if (response?.code !== 200) {
+          notification["warning"]({
+            message: response.message,
+          });
+        } else {
+          setProductInactive(response.posts.docs);
+        }
+      })
+      .catch((err) => {
+        notification["error"]({
+          message: "Error del servidor",
+        });
+      });
+    setReloadProduct(true);
+  };
+
+  // useEffect(() => {
+
+  // }, [productActiveSearch]);
+  const productSearchingActive = (param) => {
+    setProductActiveSearch(param);
+    if (viewProductActives) {
+      ProductSearchActives();
+    } else {
+      ProductSearchInactives();
+    }
+  };
+
+  // const manageReturn = (value) => {
+  //   setProdValue(value);
+
+  //   if (prodValue) {
+  //     return <ProductSearchActives />;
+  //   }else if{
+
+  //   }
+  // };
 
   return (
     <div className="product-list">
@@ -148,7 +256,7 @@ function ProductList(props) {
               placeholder="Busca un producto"
               enterButton="Buscar"
               size="large"
-              onSearch={(value) => console.log(value)}
+              onSearch={(value) => productSearchingActive(value)}
             />
           </div>
         </div>

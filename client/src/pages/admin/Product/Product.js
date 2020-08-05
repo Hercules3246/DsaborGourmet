@@ -4,7 +4,7 @@ import queryString from "query-string";
 import { notification } from "antd";
 import Pagination from "../../../components/Pagination";
 
-import { getProductActiveApi } from "../../../api/product";
+import { getProductSearch } from "../../../api/product";
 import { getAccesTokenApi } from "../../../api/auth";
 import ProductList from "../../../components/Admin/Products/ProductList";
 
@@ -41,25 +41,9 @@ function Product(props) {
 
   const token = getAccesTokenApi();
 
-  useEffect(() => {
-    //este metodo se ejecuta, justo despues de que el componente ah sido montado
-    getProductActiveApi(page, 6, true).then((response) => {
-      setProductActive(response.posts.docs); //lo que viene de la base de datos, se lo pasamos a nuestro estado
-    });
-    getProductActiveApi(page, 6, false).then((response) => {
-      setProductInactive(response.posts.docs); //lo que viene de la base de datos, se lo pasamos a nuestro estado
-    });
-    setReloadProduct(false);
-  }, [reloadProduct, page]);
-
   return (
     <div>
-      <ProductList
-        classname="product-page"
-        productActive={productActive}
-        productInactive={productInactive}
-        setReloadProduct={setReloadProduct}
-      />
+      <ProductList classname="product-page" />
 
       {/* <Pagination
         productLocation={productLocation}
