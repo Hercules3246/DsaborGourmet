@@ -1,0 +1,17 @@
+.route-list {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    &-switch {
+      display: flex;
+      align-items: center;
+
+      > button {
+        margin-right: 20px;
+      }
+    }
+  }
+}

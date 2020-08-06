@@ -118,7 +118,7 @@ function searchProd(req, res) {
   const options = {
     page,
     limit: parseInt(limit),
-    sort: { date: "asc" },
+    sort: { name: "asc" },
   };
 
   Prod.paginate(

@@ -8,6 +8,7 @@ const { API_VERSION } = require("./config");
 const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/Product");
+const routeRoutes = require("./routes/route");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -28,5 +29,6 @@ app.use((req, res, next) => {
 app.use(`/api/${API_VERSION}`, authRoutes);
 app.use(`/api/${API_VERSION}`, userRoutes);
 app.use(`/api/${API_VERSION}`, productRoutes);
+app.use(`/api/${API_VERSION}`, routeRoutes);
 
 module.exports = app;

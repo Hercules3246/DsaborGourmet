@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, notification } from "antd";
-import { addProductAdminApi } from "../../../../api/product";
+import { Form, Input, Button, notification, Select } from "antd";
+import { addRouteAdminApi } from "../../../../api/route";
 import { getAccesTokenApi } from "../../../../api/auth";
 
-import "./AddProductForm.scss";
+import "./AddRouteForm.scss";
 
 export default function AddProductForm(props) {
   const { setIsVisibleModal, setReloadProduct } = props;
@@ -11,22 +11,13 @@ export default function AddProductForm(props) {
 
   const addProduct = (event) => {
     event.preventDefault();
-    if (
-      !prodData.name ||
-      !prodData.description ||
-      !prodData.price ||
-      !prodData.stock
-    ) {
+    if (!prodData.name || !prodData.dia || !prodData.description) {
       notification["error"]({
         message: "Todos los campos son obligatorios",
       });
-    } else if (isNaN(prodData.price) || isNaN(prodData.stock)) {
-      notification["error"]({
-        message: "Los campos de precio o cantidad deben ser, NUMERICOS",
-      });
     } else {
       const accessToken = getAccesTokenApi();
-      addProductAdminApi(accessToken, prodData)
+      addRouteAdminApi(accessToken, prodData)
         .then((res) => {
           notification["success"]({
             message: res,
@@ -56,19 +47,20 @@ export default function AddProductForm(props) {
 
 function AddForm(props) {
   const { prodData, setprodData, addProduct } = props;
+  const { Option } = Select;
 
   return (
     <Form className="form-add" onSubmit={addProduct}>
       <Form.Item>
         <Input
-          placeholder="Nombre del producto"
+          placeholder="Nombre de la ruta"
           value={prodData.name}
           onChange={(e) => setprodData({ ...prodData, name: e.target.value })}
         />
       </Form.Item>
       <Form.Item>
         <Input
-          placeholder="Descripcion del producto"
+          placeholder="Descripcion de la ruta"
           value={prodData.description}
           onChange={(e) =>
             setprodData({ ...prodData, description: e.target.value })
@@ -76,23 +68,24 @@ function AddForm(props) {
         />
       </Form.Item>
       <Form.Item>
-        <Input
-          placeholder="Precio del producto"
-          value={prodData.price}
-          onChange={(e) => setprodData({ ...prodData, price: e.target.value })}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Input
-          placeholder="Cantidad"
-          value={prodData.stock}
-          onChange={(e) => setprodData({ ...prodData, stock: e.target.value })}
-        />
+        <Select
+          placeholder="Selecciona un dia"
+          onChange={(e) => setprodData({ ...prodData, dia: e })}
+          value={prodData.dia}
+        >
+          <Option value="lunes">Lunes</Option>
+          <Option value="martes">Martes</Option>
+          <Option value="miercoles">Miercoles</Option>
+          <Option value="jueves">Jueves</Option>
+          <Option value="viernes">Viernes</Option>
+          <Option value="sabado">Sabado</Option>
+          <Option value="domingo">Domingo</Option>
+        </Select>
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="btn-submit">
-          Crear Producto
+          Crear ruta
         </Button>
       </Form.Item>
     </Form>

@@ -6,6 +6,7 @@ import AdminHome from "../pages/admin/admin";
 import AdminSingIn from "../pages/admin/SignIn/SignIn";
 import AdminUsers from "../pages/admin/Users";
 import AdminProduct from "../pages/admin/Product";
+import AdminRoute from "../pages/admin/Route";
 
 //PAGES
 import Home from "../pages/Home";
@@ -39,6 +40,11 @@ const routes = [
         path: "/admin/product",
         exact: true,
         component: AdminProduct,
+      },
+      {
+        path: "/admin/routes",
+        exact: true,
+        component: AdminRoute,
       },
       {
         component: Error404,

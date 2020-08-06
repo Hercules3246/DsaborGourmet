@@ -44,10 +44,10 @@ export default function MenuSidebar(props) {
             <span className="nac-text">Producto</span>
           </Link>
         </MenuItem>
-        <MenuItem className="customclass" /*key="/admin/product"*/>
+        <MenuItem className="customclass" key="/admin/routes">
           <Link
             style={{ color: "inherit", textDecoration: "inherit" }}
-            // to={"/admin/product"}
+            to={"/admin/routes"}
           >
             <GoldOutlined />
             <span className="nac-text">Rutas</span>

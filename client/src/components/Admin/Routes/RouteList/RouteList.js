@@ -15,19 +15,19 @@ import Modal from "../../../Modal";
 import { getAccesTokenApi } from "../../../../api/auth";
 import Pagination from "../../../../components/Pagination";
 
-import EditProductForm from "../EditProductForm";
-import AddProductForm from "../AddProductForm";
+import EditRouteForm from "../EditRouteForm";
+import AddProductForm from "../AddRouteForm";
 import {
-  activateProdApi,
-  deleteProductApi,
-  getProductSearch,
-} from "../../../../api/product";
+  activateRouteApi,
+  deleteRouteApi,
+  getRouteSearch,
+} from "../../../../api/route";
 
-import "./ProductList.scss";
+import "./RouteList.scss";
 const { confirm } = ModalAntd;
 const { Search } = Input;
 
-function ProductList(props) {
+function RouteList(props) {
   const { location, history } = props;
   const [viewProductActives, setViewProductActives] = useState(true); //Switcher
   const [productActiveSearch, setProductActiveSearch] = useState(""); //search
@@ -47,7 +47,7 @@ function ProductList(props) {
 
   const addProductModal = () => {
     setIsVisibleModal(true);
-    setModalTitle("Creando Nuevo Producto");
+    setModalTitle("Creando Nueva Ruta");
     setModalContent(
       <AddProductForm
         setIsVisibleModal={setIsVisibleModal}
@@ -58,16 +58,16 @@ function ProductList(props) {
 
   const ActivePagination = () => {
     useEffect(() => {
-      getProductSearch(page, 6, productActiveSearch, true)
+      getRouteSearch(page, 6, productActiveSearch, true)
         .then((response) => {
           if (response?.code !== 200) {
             notification["warning"]({
               message: response.message,
             });
           } else {
-            setProductLocation(response.posts.page);
-            setProductLocationTotal(response.posts.total);
-            setProductLocationLimit(response.posts.limit);
+            setProductLocation(response.routes.page);
+            setProductLocationTotal(response.routes.total);
+            setProductLocationLimit(response.routes.limit);
           }
         })
         .catch((err) => {
@@ -92,16 +92,16 @@ function ProductList(props) {
 
   const InactivePagination = () => {
     useEffect(() => {
-      getProductSearch(page, 6, productActiveSearch, false)
+      getRouteSearch(page, 6, productActiveSearch, false)
         .then((response) => {
           if (response?.code !== 200) {
             notification["warning"]({
               message: response.message,
             });
           } else {
-            setProductLocation(response.posts.page);
-            setProductLocationTotal(response.posts.total);
-            setProductLocationLimit(response.posts.limit);
+            setProductLocation(response.routes.page);
+            setProductLocationTotal(response.routes.total);
+            setProductLocationLimit(response.routes.limit);
           }
         })
         .catch((err) => {
@@ -130,24 +130,24 @@ function ProductList(props) {
 
   useEffect(() => {
     //este metodo se ejecuta, justo despues de que el componente ah sido montado
-    getProductSearch(page, 6, productActiveSearch, true).then((response) => {
-      setProductActive(response.posts.docs); //lo que viene de la base de datos, se lo pasamos a nuestro estado
+    getRouteSearch(page, 6, productActiveSearch, true).then((response) => {
+      setProductActive(response.routes.docs); //lo que viene de la base de datos, se lo pasamos a nuestro estado
     });
-    getProductSearch(page, 6, productActiveSearch, false).then((response) => {
-      setProductInactive(response.posts.docs); //lo que viene de la base de datos, se lo pasamos a nuestro estado
+    getRouteSearch(page, 6, productActiveSearch, false).then((response) => {
+      setProductInactive(response.routes.docs); //lo que viene de la base de datos, se lo pasamos a nuestro estado
     });
     setReloadProduct(false);
   }, [reloadProduct, page]);
 
   const ProductSearchActives = () => {
-    getProductSearch(page, 6, productActiveSearch, true)
+    getRouteSearch(page, 6, productActiveSearch, true)
       .then((response) => {
         if (response?.code !== 200) {
           notification["warning"]({
             message: response.message,
           });
         } else {
-          setProductActive(response.posts.docs);
+          setProductActive(response.routes.docs);
         }
       })
       .catch((err) => {
@@ -160,14 +160,14 @@ function ProductList(props) {
   };
 
   const ProductSearchInactives = () => {
-    getProductSearch(page, 6, productActiveSearch, false)
+    getRouteSearch(page, 6, productActiveSearch, false)
       .then((response) => {
         if (response?.code !== 200) {
           notification["warning"]({
             message: response.message,
           });
         } else {
-          setProductInactive(response.posts.docs);
+          setProductInactive(response.routes.docs);
         }
       })
       .catch((err) => {
@@ -197,13 +197,13 @@ function ProductList(props) {
             onChange={() => setViewProductActives(!viewProductActives)}
           />
           <span>
-            {viewProductActives ? "Productos Activos" : "Productos Inactivos "}
+            {viewProductActives ? "Rutas Activas" : "Rutas Inactivas "}
           </span>
 
           <div className="__search-content">
             <Search
               className="__search-button"
-              placeholder="Busca un producto"
+              placeholder="Busca una ruta"
               enterButton="Buscar"
               size="large"
               onSearch={(value) => productSearchingActive(value)}
@@ -213,7 +213,7 @@ function ProductList(props) {
 
         <div className="__button_content">
           <Button type="primary" onClick={addProductModal}>
-            Nuevo Producto
+            Nueva ruta
           </Button>
         </div>
       </div>
@@ -259,7 +259,7 @@ function ProductsActive(props) {
     setIsVisibleModal(true);
     setModalTitle(`Editar ${prod.name} / ${prod.description} `);
     setModalContent(
-      <EditProductForm
+      <EditRouteForm
         prod={prod}
         setIsVisibleModal={setIsVisibleModal}
         setReloadProduct={setReloadProduct}
@@ -289,7 +289,7 @@ function ProductsActiveList(props) {
   const desactivateProd = () => {
     const accesToken = getAccesTokenApi();
 
-    activateProdApi(accesToken, prod._id, false)
+    activateRouteApi(accesToken, prod._id, false)
       .then((response) => {
         notification["success"]({
           message: response,
@@ -313,7 +313,7 @@ function ProductsActiveList(props) {
       okType: "danger",
       cancelText: "Cancelar",
       onOk() {
-        deleteProductApi(accesToken, prod._id)
+        deleteRouteApi(accesToken, prod._id)
           .then((response) => {
             notification["success"]({
               message: response,
@@ -345,7 +345,7 @@ function ProductsActiveList(props) {
     >
       <List.Item.Meta
         title={`${prod.name} - ${prod.description}  `}
-        description={` precio: ${prod.price}`}
+        description={` Dia: ${prod.dia}`}
       ></List.Item.Meta>
     </List.Item>
   );
@@ -371,7 +371,7 @@ function ProductsInactiveList(props) {
   const activateProd = () => {
     const accesToken = getAccesTokenApi();
 
-    activateProdApi(accesToken, prod._id, true)
+    activateRouteApi(accesToken, prod._id, true)
       .then((response) => {
         notification["success"]({
           message: response,
@@ -395,7 +395,7 @@ function ProductsInactiveList(props) {
       okType: "danger",
       cancelText: "Cancelar",
       onOk() {
-        deleteProductApi(accesToken, prod._id)
+        deleteRouteApi(accesToken, prod._id)
           .then((response) => {
             notification["success"]({
               message: response,
@@ -424,10 +424,10 @@ function ProductsInactiveList(props) {
     >
       <List.Item.Meta
         title={`${prod.name} - ${prod.description}  `}
-        description={` precio: ${prod.price}`}
+        description={` Dia: ${prod.dia}`}
       ></List.Item.Meta>
     </List.Item>
   );
 }
 
-export default withRouter(ProductList);
+export default withRouter(RouteList);

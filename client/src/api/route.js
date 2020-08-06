@@ -1,22 +1,7 @@
 import { basePath, apiVersion } from "./config";
 
-// export function getProductActiveApi(page, limit, status) {
-//   const url = `${basePath}/${apiVersion}/product-active?page=${page}&limit=${limit}&active=${status}`;
-
-//   return fetch(url)
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((result) => {
-//       return result;
-//     })
-//     .catch((err) => {
-//       return err.message;
-//     });
-// }
-
-export function getProductSearch(page, limit, name, status) {
-  const url = `${basePath}/${apiVersion}/product-search?page=${page}&limit=${limit}&name=${name}&active=${status}`;
+export function getRouteSearch(page, limit, name, status) {
+  const url = `${basePath}/${apiVersion}/route-search?page=${page}&limit=${limit}&name=${name}&active=${status}`;
 
   return fetch(url)
     .then((response) => {
@@ -30,8 +15,8 @@ export function getProductSearch(page, limit, name, status) {
     });
 }
 
-export function updateProductApi(token, prodId, data) {
-  const url = `${basePath}/${apiVersion}/update-product/${prodId}`;
+export function updateRouteApi(token, routeId, data) {
+  const url = `${basePath}/${apiVersion}/update-route/${routeId}`;
 
   const params = {
     method: "PUT",
@@ -54,32 +39,8 @@ export function updateProductApi(token, prodId, data) {
     });
 }
 
-export function addProductApi(token, product) {
-  const url = `${basePath}/${apiVersion}/add-product`;
-
-  const params = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-    },
-    body: JSON.stringify(product),
-  };
-
-  return fetch(url, params)
-    .then((response) => {
-      return response.json();
-    })
-    .then((result) => {
-      return result.message;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-export function deleteProductApi(token, prodId) {
-  const url = `${basePath}/${apiVersion}/delete-product/${prodId}`;
+export function deleteRouteApi(token, routeId) {
+  const url = `${basePath}/${apiVersion}/delete-route/${routeId}`;
 
   const params = {
     method: "DELETE",
@@ -101,8 +62,8 @@ export function deleteProductApi(token, prodId) {
     });
 }
 
-export function addProductAdminApi(token, data) {
-  const url = `${basePath}/${apiVersion}/add-product-admin/`;
+export function addRouteAdminApi(token, data) {
+  const url = `${basePath}/${apiVersion}/add-route-admin/`;
   const params = {
     method: "POST",
     headers: {
@@ -124,8 +85,8 @@ export function addProductAdminApi(token, data) {
     });
 }
 
-export function activateProdApi(token, userdId, status) {
-  const url = `${basePath}/${apiVersion}/activate-prod/${userdId}`;
+export function activateRouteApi(token, route, status) {
+  const url = `${basePath}/${apiVersion}/activate-route/${route}`;
   const params = {
     method: "PUT",
     headers: {
