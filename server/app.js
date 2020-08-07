@@ -9,6 +9,7 @@ const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/Product");
 const routeRoutes = require("./routes/route");
+const clientRoutes = require("./routes/client");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -30,5 +31,6 @@ app.use(`/api/${API_VERSION}`, authRoutes);
 app.use(`/api/${API_VERSION}`, userRoutes);
 app.use(`/api/${API_VERSION}`, productRoutes);
 app.use(`/api/${API_VERSION}`, routeRoutes);
+app.use(`/api/${API_VERSION}`, clientRoutes);
 
 module.exports = app;

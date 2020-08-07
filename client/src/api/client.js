@@ -1,7 +1,7 @@
 import { basePath, apiVersion } from "./config";
 
-export function getProductSearch(page, limit, name, status) {
-  const url = `${basePath}/${apiVersion}/product-search?page=${page}&limit=${limit}&name=${name}&active=${status}`;
+export function getClientSearch(page, limit, name, status) {
+  const url = `${basePath}/${apiVersion}/client-search?page=${page}&limit=${limit}&name=${name}&active=${status}`;
 
   return fetch(url)
     .then((response) => {
@@ -15,8 +15,8 @@ export function getProductSearch(page, limit, name, status) {
     });
 }
 
-export function updateProductApi(token, prodId, data) {
-  const url = `${basePath}/${apiVersion}/update-product/${prodId}`;
+export function updateClientApi(token, clientId, data) {
+  const url = `${basePath}/${apiVersion}/update-client/${clientId}`;
 
   const params = {
     method: "PUT",
@@ -39,32 +39,8 @@ export function updateProductApi(token, prodId, data) {
     });
 }
 
-export function addProductApi(token, product) {
-  const url = `${basePath}/${apiVersion}/add-product`;
-
-  const params = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-    },
-    body: JSON.stringify(product),
-  };
-
-  return fetch(url, params)
-    .then((response) => {
-      return response.json();
-    })
-    .then((result) => {
-      return result.message;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-export function deleteProductApi(token, prodId) {
-  const url = `${basePath}/${apiVersion}/delete-product/${prodId}`;
+export function deleteClientApi(token, clientId) {
+  const url = `${basePath}/${apiVersion}/delete-client/${clientId}`;
 
   const params = {
     method: "DELETE",
@@ -86,8 +62,8 @@ export function deleteProductApi(token, prodId) {
     });
 }
 
-export function addProductAdminApi(token, data) {
-  const url = `${basePath}/${apiVersion}/add-product-admin/`;
+export function addClientAdminApi(token, data) {
+  const url = `${basePath}/${apiVersion}/add-client-admin/`;
   const params = {
     method: "POST",
     headers: {
@@ -109,8 +85,8 @@ export function addProductAdminApi(token, data) {
     });
 }
 
-export function activateProdApi(token, userdId, status) {
-  const url = `${basePath}/${apiVersion}/activate-prod/${userdId}`;
+export function activateClientApi(token, client, status) {
+  const url = `${basePath}/${apiVersion}/activate-client/${client}`;
   const params = {
     method: "PUT",
     headers: {
