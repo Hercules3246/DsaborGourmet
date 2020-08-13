@@ -99,23 +99,17 @@ function activateClient(req, res) {
 }
 
 function searchClient(req, res) {
-  const { page = 1, limit = 10 } = req.query;
   const query = req.query;
-  const options = {
-    page,
-    limit: parseInt(limit),
-    sort: { name: "asc" },
-  };
+  const name = query.name.toLowerCase() || "";
 
-  Clie.paginate(
+  Clie.find(
     {
-      name: { $regex: query.name.toLowerCase() },
-      active: query.active,
+      name: { $regex: name },
     },
-    options,
+
     (err, clientStored) => {
       if (err) {
-        res.status(500).send({ code: 500, message: "Error del servidor." });
+        res.status(500).send({ code: 500, message: err });
       } else {
         if (!clientStored) {
           res.status(404).send({

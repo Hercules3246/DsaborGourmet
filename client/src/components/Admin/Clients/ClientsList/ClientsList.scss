@@ -1,0 +1,22 @@
+.product-list {
+  &__header {
+    clear: both;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    &-switch {
+      display: block;
+      &__search-content {
+        margin-left: 50px !important;
+      }
+    }
+
+    &__buttons {
+      > button {
+        margin-right: 20px;
+      }
+    }
+  }
+}

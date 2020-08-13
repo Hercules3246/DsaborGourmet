@@ -6,7 +6,6 @@ import "./Pagination.scss";
 export default function Pagination(props) {
   const {
     productLocation,
-    setProductLocation,
     history,
     ProductLocationLimit,
     ProductLocationTotal,
@@ -18,6 +17,17 @@ export default function Pagination(props) {
     history.push(`${location.pathname}?page=${newPage}`);
   };
 
+  // useEffect(() => {
+
+  //   console.log();
+  // }, [total]);
+
+  // console.log(history);
+  // console.log(ProductLocationLimit);
+  // console.log(ProductLocationTotal);
+  // console.log(productLocation);
+
+  // console.log(currentPage);
   return (
     <PaginationAntd
       defaultCurrent={currentPage}

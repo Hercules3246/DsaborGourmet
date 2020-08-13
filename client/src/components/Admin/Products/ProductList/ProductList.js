@@ -139,6 +139,62 @@ function ProductList(props) {
     setReloadProduct(false);
   }, [reloadProduct, page]);
 
+  const restarPage = () => {
+    const currentPage = parseInt(productLocation);
+    const resta = currentPage - 1;
+    this.page = resta;
+  };
+
+  useEffect(() => {
+    if (
+      ProductLocationTotal == 6 ||
+      ProductLocationTotal == 12 ||
+      ProductLocationTotal == 18 ||
+      ProductLocationTotal == 24 ||
+      ProductLocationTotal == 30 ||
+      ProductLocationTotal == 36 ||
+      ProductLocationTotal == 42 ||
+      ProductLocationTotal == 48 ||
+      ProductLocationTotal == 54 ||
+      ProductLocationTotal == 60 ||
+      ProductLocationTotal == 66 ||
+      ProductLocationTotal == 72 ||
+      ProductLocationTotal == 78 ||
+      ProductLocationTotal == 84 ||
+      ProductLocationTotal == 90 ||
+      ProductLocationTotal == 96 ||
+      ProductLocationTotal == 102 ||
+      ProductLocationTotal == 108 ||
+      ProductLocationTotal == 114 ||
+      ProductLocationTotal == 120 ||
+      ProductLocationTotal == 126 ||
+      ProductLocationTotal == 132 ||
+      ProductLocationTotal == 138 ||
+      ProductLocationTotal == 144 ||
+      ProductLocationTotal == 150 ||
+      ProductLocationTotal == 156 ||
+      ProductLocationTotal == 162 ||
+      ProductLocationTotal == 168 ||
+      ProductLocationTotal == 174 ||
+      ProductLocationTotal == 180 ||
+      ProductLocationTotal == 186 ||
+      ProductLocationTotal == 192 ||
+      ProductLocationTotal == 198 ||
+      ProductLocationTotal == 204 ||
+      ProductLocationTotal == 210 ||
+      ProductLocationTotal == 216 ||
+      ProductLocationTotal == 240 ||
+      ProductLocationTotal == 246 ||
+      ProductLocationTotal == 252 ||
+      ProductLocationTotal == 258 ||
+      ProductLocationTotal == 264 ||
+      ProductLocationTotal == 270 ||
+      ProductLocationTotal == 276
+    ) {
+      history.push(`${location.pathname}?page=${restarPage}`);
+    }
+  }, [ProductLocationTotal]);
+
   const ProductSearchActives = () => {
     getProductSearch(page, 6, productActiveSearch, true)
       .then((response) => {

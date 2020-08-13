@@ -74,6 +74,7 @@ function ClientList(props) {
             message: "Error del servidor",
           });
         });
+
       setReloadProduct(false);
     }, [page]);
 
@@ -126,6 +127,35 @@ function ClientList(props) {
   useEffect(() => {
     history.push(`${location.pathname}`);
   }, [viewProductActives, productActiveSearch]);
+
+  const restarPage = () => {
+    const currentPage = parseInt(productLocation);
+    const resta = currentPage - 1;
+    this.page = resta;
+  };
+
+  useEffect(() => {
+    if (ProductLocationTotal == 6 || ProductLocationTotal == 12) {
+      history.push(`${location.pathname}?page=${restarPage}`);
+    }
+  }, [ProductLocationTotal]);
+
+  // useEffect(() => {
+  //   if (ProductLocationLimit <= ProductLocationTotal) {
+  //     console.log("Ostia Puta");
+  //     console.log(productLocation);
+  //     // const {} = page;
+  //     // console.log(page);
+  //   }
+  //   // console.log("Ostia PUTA");
+  //   // console.log(ProductLocationLimit);
+  //   // console.log(page);
+  //   // console.log(ProductLocationTotal);
+  //   // console.log("Limite:");
+  //   // console.log(ProductLocationLimit);
+  //   // console.log("Cantidad : ");
+  //   // console.log(ProductLocationTotal);
+  // }, [ProductLocationTotal]);
 
   useEffect(() => {
     //este metodo se ejecuta, justo despues de que el componente ah sido montado
@@ -293,6 +323,7 @@ function ProductsActiveList(props) {
         notification["success"]({
           message: response,
         });
+
         setReloadProduct(true);
       })
       .catch((err) => {

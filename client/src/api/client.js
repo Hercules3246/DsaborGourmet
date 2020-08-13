@@ -1,7 +1,7 @@
 import { basePath, apiVersion } from "./config";
 
-export function getClientSearch(page, limit, name, status) {
-  const url = `${basePath}/${apiVersion}/client-search?page=${page}&limit=${limit}&name=${name}&active=${status}`;
+export function getClientSearch(name) {
+  const url = `${basePath}/${apiVersion}/client-search?name=${name}`;
 
   return fetch(url)
     .then((response) => {
