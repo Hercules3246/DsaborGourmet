@@ -25,5 +25,6 @@ api.put(
 );
 api.delete("/delete-user/:id", [md_auth.ensureAuth], UserController.deleteUser);
 api.post("/sign-up-admin", [md_auth.ensureAuth], UserController.signUpAdmin);
+api.get("/user-search", UserController.searchClient);
 
 module.exports = api;

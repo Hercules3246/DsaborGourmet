@@ -276,6 +276,41 @@ function signUpAdmin(req, res) {
   }
 }
 
+function searchClient(req, res) {
+  const { page = 1, limit = 10 } = req.query;
+
+  const query = req.query;
+  const name = query.name || "";
+
+  const options = {
+    page,
+    limit: parseInt(limit),
+    sort: { name: "asc" },
+  };
+
+  User.paginate(
+    {
+      name: { $regex: name },
+    },
+    options,
+
+    (err, clientStored) => {
+      if (err) {
+        res.status(500).send({ code: 500, message: err });
+      } else {
+        if (!clientStored) {
+          res.status(404).send({
+            code: 404,
+            message: "No se ha encontrado ningun Usuario con ese nombre.",
+          });
+        } else {
+          res.status(200).send({ code: 200, clients: clientStored });
+        }
+      }
+    }
+  );
+}
+
 module.exports = {
   signUp,
   signIn,
@@ -287,4 +322,5 @@ module.exports = {
   activateUser,
   deleteUser,
   signUpAdmin,
+  searchClient,
 };

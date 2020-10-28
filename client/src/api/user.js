@@ -228,3 +228,18 @@ export function signUpAdminApi(token, data) {
       return err.message;
     });
 }
+
+export function getUserSearch(page, limit, name) {
+  const url = `${basePath}/${apiVersion}/user-search?page=${page}&limit=${limit}&name=${name}`;
+
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}

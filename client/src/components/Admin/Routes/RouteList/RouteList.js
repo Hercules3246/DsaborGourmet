@@ -75,28 +75,7 @@ function RouteList(props) {
             message: "Error del servidor",
           });
         });
-      setReloadProduct(false);
     }, [page]);
-
-    const restarPage = () => {
-      const currentPage = parseInt(productLocation);
-      const resta = currentPage - 1;
-      this.page = resta;
-    };
-
-    useEffect(() => {
-      if (
-        ProductLocationTotal == 6 ||
-        ProductLocationTotal == 12 ||
-        ProductLocationTotal == 18 ||
-        ProductLocationTotal == 24 ||
-        ProductLocationTotal == 30 ||
-        ProductLocationTotal == 36 ||
-        ProductLocationTotal == 42
-      ) {
-        history.push(`${location.pathname}?page=${restarPage}`);
-      }
-    }, [ProductLocationTotal]);
 
     return (
       <Pagination
@@ -129,7 +108,6 @@ function RouteList(props) {
             message: "Error del servidor",
           });
         });
-      setReloadProduct(false);
     }, [page]);
 
     return (
@@ -158,6 +136,26 @@ function RouteList(props) {
     });
     setReloadProduct(false);
   }, [reloadProduct, page]);
+
+  const restarPage = () => {
+    const currentPage = parseInt(productLocation);
+    const resta = currentPage - 1;
+    this.page = resta;
+  };
+
+  useEffect(() => {
+    if (
+      ProductLocationTotal == 6 ||
+      ProductLocationTotal == 12 ||
+      ProductLocationTotal == 18 ||
+      ProductLocationTotal == 24 ||
+      ProductLocationTotal == 30 ||
+      ProductLocationTotal == 36 ||
+      ProductLocationTotal == 42
+    ) {
+      history.push(`${location.pathname}?page=${restarPage}`);
+    }
+  }, [ProductLocationTotal]);
 
   const ProductSearchActives = () => {
     getRouteSearch(page, 6, productActiveSearch, true)

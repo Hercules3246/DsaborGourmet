@@ -25,31 +25,37 @@ const routes = [
         path: "/admin",
         exact: true,
         component: AdminHome,
+        permissions: ["admin"],
       },
       {
         path: "/admin/login",
         exact: true,
         component: AdminSingIn,
+        permissions: ["admin"],
       },
       {
         path: "/admin/users",
         exact: true,
         component: AdminUsers,
+        permissions: ["admin"],
       },
       {
         path: "/admin/product",
         exact: true,
         component: AdminProduct,
+        permissions: ["admin"],
       },
       {
         path: "/admin/routes",
         exact: true,
         component: AdminRoute,
+        permissions: ["admin"],
       },
       {
         path: "/admin/clients",
         exact: true,
         component: AdminClient,
+        permissions: ["admin"],
       },
       {
         component: Error404,

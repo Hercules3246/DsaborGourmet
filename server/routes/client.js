@@ -13,6 +13,7 @@ api.post(
 api.put(
   "/update-client/:id",
   [md_auth.ensureAuth],
+
   ClientController.updateClient
 );
 api.put(

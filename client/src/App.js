@@ -24,7 +24,13 @@ function RouteWithSubRoutes(route) {
     <Route
       path={route.path}
       exact={route.exact}
-      render={(props) => <route.component routes={route.routes} {...props} />}
+      render={(props) => (
+        <route.component
+          routes={route.routes}
+          permissions={route.permissions}
+          {...props}
+        />
+      )}
     />
   );
 }

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
+import queryString from "query-string";
 import {
   Switch,
   List,
@@ -16,18 +18,29 @@ import {
   getAvatarApi,
   activateUserApi,
   deleteUserApi,
+  getUserSearch,
 } from "../../../../api/user";
 import { getAccesTokenApi } from "../../../../api/auth";
+import Pagination from "../../../../components/Pagination";
 
 import "./ListUsers.scss";
 const { confirm } = ModalAntd;
 
-export default function ListUsers(props) {
+function ListUsers(props) {
+  const { location, history } = props;
   const { usersActive, usersInactive, setReloadUsers } = props;
   const [viewUsersActives, setViewUsersActive] = useState(true);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState(null);
+  const [setSearch, search] = useState("");
+
+  //Pagination
+  const { page = 1 } = queryString.parse(location.search);
+  const [productLocation, setProductLocation] = useState(null); // pagination - pagina actual
+  const [ProductLocationTotal, setProductLocationTotal] = useState(null); //paginacion - cantidad total de documents
+  const [ProductLocationLimit, setProductLocationLimit] = useState(null); //limite de productos
+
   const addUserModal = () => {
     setIsVisibleModal(true);
     setModalTitle("Creando Nuevo Usuario");
@@ -38,6 +51,73 @@ export default function ListUsers(props) {
       />
     );
   };
+
+  const ActivePagination = () => {
+    useEffect(() => {
+      getUserSearch(page, "6", search)
+        .then((response) => {
+          if (response?.code !== 200) {
+            notification["warning"]({
+              message: response.message,
+            });
+          } else {
+            setProductLocation(response.clients.page);
+            setProductLocationTotal(response.clients.total);
+            setProductLocationLimit(response.clients.limit);
+          }
+        })
+        .catch((err) => {
+          notification["error"]({
+            message: "Error del servidor",
+          });
+        });
+    }, [page]);
+
+    return (
+      <Pagination
+        productLocation={productLocation}
+        ProductLocationLimit={ProductLocationLimit}
+        ProductLocationTotal={ProductLocationTotal}
+        location={location}
+        history={history}
+        setProductLocation={setProductLocation}
+      />
+    );
+  };
+
+  const InactivePagination = () => {
+    useEffect(() => {
+      getUserSearch(page, "1", search)
+        .then((response) => {
+          if (response?.code !== 200) {
+            notification["warning"]({
+              message: response.message,
+            });
+          } else {
+            setProductLocation(response.clients.page);
+            setProductLocationTotal(response.clients.total);
+            setProductLocationLimit(response.clients.limit);
+          }
+        })
+        .catch((err) => {
+          notification["error"]({
+            message: "Error del servidor",
+          });
+        });
+    }, [page]);
+
+    return (
+      <Pagination
+        productLocation={productLocation}
+        ProductLocationLimit={ProductLocationLimit}
+        ProductLocationTotal={ProductLocationTotal}
+        location={location}
+        history={history}
+        setReloadUsers={setReloadUsers}
+      />
+    );
+  };
+
   return (
     <div className="list-users">
       <div className="list-users__header">
@@ -76,6 +156,7 @@ export default function ListUsers(props) {
       >
         {modalContent}
       </Modal>
+      {viewUsersActives ? <ActivePagination /> : <InactivePagination />}
     </div>
   );
 }
@@ -294,3 +375,5 @@ function UserInactive(props) {
     </List.Item>
   );
 }
+
+export default withRouter(ListUsers);

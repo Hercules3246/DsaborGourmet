@@ -20,6 +20,7 @@ import AddClientForm from "../AddClientForm";
 import EditClientForm from "../EditClientForm";
 
 import Modal from "../../../Modal";
+import { withRouter } from "react-router-dom";
 
 const { Column } = Table;
 const { confirm } = ModalAntd;
@@ -28,7 +29,7 @@ const ExcelFile = ExportExcel.ExcelFile;
 const ExcelSheet = ExportExcel.ExcelSheet;
 const ExcelColumn = ExportExcel.ExcelColumn;
 
-export default function ClientsList() {
+function ClientsList(props) {
   const [data, setData] = useState([]);
   const [listColum, setListColums] = useState([]);
   const [search, setSearch] = useState("");
@@ -49,6 +50,8 @@ export default function ClientsList() {
       />
     );
   };
+
+  console.log(props);
 
   useEffect(() => {
     //este metodo se ejecuta, justo despues de que el componente ah sido montado
@@ -211,3 +214,5 @@ function ClientActive(props) {
     </Table>
   );
 }
+
+export default withRouter(ClientsList);

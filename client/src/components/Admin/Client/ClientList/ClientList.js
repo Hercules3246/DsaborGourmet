@@ -140,23 +140,6 @@ function ClientList(props) {
     }
   }, [ProductLocationTotal]);
 
-  // useEffect(() => {
-  //   if (ProductLocationLimit <= ProductLocationTotal) {
-  //     console.log("Ostia Puta");
-  //     console.log(productLocation);
-  //     // const {} = page;
-  //     // console.log(page);
-  //   }
-  //   // console.log("Ostia PUTA");
-  //   // console.log(ProductLocationLimit);
-  //   // console.log(page);
-  //   // console.log(ProductLocationTotal);
-  //   // console.log("Limite:");
-  //   // console.log(ProductLocationLimit);
-  //   // console.log("Cantidad : ");
-  //   // console.log(ProductLocationTotal);
-  // }, [ProductLocationTotal]);
-
   useEffect(() => {
     //este metodo se ejecuta, justo despues de que el componente ah sido montado
     getClientSearch(page, 6, productActiveSearch, true).then((response) => {

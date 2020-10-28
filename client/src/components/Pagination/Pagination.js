@@ -12,22 +12,21 @@ export default function Pagination(props) {
     location,
   } = props;
 
+  // console.log(productLocation);
+  // console.log("History: ");
+  // console.log(history);
+  // console.log("limit: ");
+  // console.log(ProductLocationLimit);
+  // console.log("total: ");
+  // console.log(ProductLocationTotal);
+  // console.log("location: ");
+  // console.log(location);
+
   const currentPage = parseInt(productLocation);
   const onChangePage = (newPage) => {
     history.push(`${location.pathname}?page=${newPage}`);
   };
 
-  // useEffect(() => {
-
-  //   console.log();
-  // }, [total]);
-
-  // console.log(history);
-  // console.log(ProductLocationLimit);
-  // console.log(ProductLocationTotal);
-  // console.log(productLocation);
-
-  // console.log(currentPage);
   return (
     <PaginationAntd
       defaultCurrent={currentPage}
